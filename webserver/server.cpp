@@ -8,7 +8,7 @@
 #include <filesystem> //allows us to check and see where the server is located
 
 //Created Libraries
-#include "../cpp-httplib/httplib.h"
+#include "cpp-httplib/httplib.h"
 /*
     For this project, we will be using an open source library for communication between our c++ server and the ports.
     The library is called CPP-HTTPLIB by yhirose.
@@ -22,7 +22,8 @@
         -> run the Developer Command prompt for VS 2022 
         -> run "code ."
         -> open file location of the root for the server (the folder before webserver)
-        -> debug the program (this will build the program)
+        -> click on the server.cpp file
+        -> debug the program using cl.exe (this will build the program)
 
     If an error occurs:
         -> open the .vscode folder 
