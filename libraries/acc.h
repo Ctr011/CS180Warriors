@@ -8,4 +8,8 @@
 #include <filesystem>
 #include <string>
 
+void AddPass(std::string);
+void AddEmail(std::string);
+bool CheckEmailoPass(std::string, std::string);
+
 #endif
