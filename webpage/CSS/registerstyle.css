@@ -61,12 +61,6 @@ body {
     font-size: 20px;
 }
 
-.wrapper .remember-forgot {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14.5px;
-    margin: -15px 0 15px;
-}
 
 .remember-forgot label input {
     accent-color: #fff;
@@ -87,7 +81,7 @@ body {
     font-weight: 600;
 }
 
-.wrapper .register-link {
+.wrapper .login-link {
     font-size: 14.5px;
     text-align: center;
     margin: 20px 0 15px;
