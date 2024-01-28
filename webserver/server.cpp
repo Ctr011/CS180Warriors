@@ -50,15 +50,19 @@ int main(){
 
     //setting functiom to evoke html files
     sv.Get("/", [](const httplib::Request &, httplib::Response &resp){
-        std::ifstream file("../webpage/HTML/temp_intro.html"); //change later on with actual intro page
+        std::ifstream file("../webpage/HTML/loginindex.html"); //change later on with actual intro page
         std::stringstream buffer; //setting buffer for the html files
         buffer << file.rdbuf(); //buffer will now load the html file (webpage)
         resp.set_content(buffer.str(), "text/html"); //finally loading the file page onto the server 
     });
 
     //intital test for the server
-    sv.Get("/hi", [](const httplib::Request &, httplib::Response &res) { 
-        res.set_content("Hello World!", "text/plain");
+    sv.Get("/hi", [](const httplib::Request &, httplib::Response &resp) { 
+                std::ifstream file("../webpage/HTML/temp_intro.html"); //change later on with actual intro page
+        std::stringstream buffer; //setting buffer for the html files
+        buffer << file.rdbuf(); //buffer will now load the html file (webpage)
+        resp.set_content(buffer.str(), "text/html"); //finally loading the file page onto the server 
+        // res.set_content("Hello World!", "text/plain");
     });
 
     //setting starting server comment 
