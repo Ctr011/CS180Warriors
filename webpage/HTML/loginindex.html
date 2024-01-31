@@ -9,18 +9,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/CSS/loginstyle.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="shortcut icon" href="#" > <!-- This needs to be added to all the files to fix firefox errors-->
+        <script type="text/javascript" src="/JS/login_page.js"></script>
     </head>
 
     <body>
         <div class="wrapper">
-            <form action="">
+            <form>
                 <h1> GameRec+</h1>
                 <div class="input-box">
-                    <input type="text" placeholder="Username" required>
+                    <input id="username" action="/login" type="text" placeholder="Username" required>
                     <i class='bx bx-user' ></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password" required>
+                    <input id="password" action="/login" type="password" placeholder="Password" required>
                     <i class='bx bx-lock-alt' ></i>
                 </div>
                 
@@ -28,14 +30,14 @@
                 <div class="remember-forgot">
                     <label> <input type="checkbox"> Remember me</label>
                     
-                    </div>
+                </div>
 
-                    <button type="submit" class="btn">Login</button>
+                <button id="login_submit" onclick="userlog(event)" type="button" class="btn">Login</button>
 
-                    <div class="register-link">
-                        <p>Don't have an account? <a href="registerindex.html">Register</a></p>
-                    </div>
+                <div class="register-link">
+                    <p>Don't have an account? <a href="registerindex.html">Register</a></p>
                 </div>
             </form>
+        </div>
     </body>
 </html>

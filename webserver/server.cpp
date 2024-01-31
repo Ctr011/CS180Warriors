@@ -36,6 +36,8 @@
 int main(){
     //initializing the server to sv
     httplib::Server sv;
+    std::string username;
+    std::string password;
 
     //setting first mount for files
     sv.set_mount_point("/", "../webpage");
@@ -63,6 +65,22 @@ int main(){
         buffer << file.rdbuf(); //buffer will now load the html file (webpage)
         resp.set_content(buffer.str(), "text/html"); //finally loading the file page onto the server 
         // res.set_content("Hello World!", "text/plain");
+    });
+
+    sv.Post("/login", [](const httplib::Request &req, httplib::Response &resp){
+        if(req.has_file("user") && req.has_file("user_pass")){
+            const auto &username = req.get_file_value("user");
+            const auto &password = req.get_file_value("user_pass");
+            std::cout << "USERNAME: " << username.content << std::endl;
+            std::cout << "PASSWORD: " << password.content << std::endl;
+            resp.status=200;
+            resp.set_content("USERNAME FOUND", "text/plain");
+            return;
+        }
+        else{
+        resp.status = 400;
+        resp.set_content("USERNAME or PASSWORD NOT FOUND","text/plain");
+        return;}
     });
 
     //setting starting server comment 
