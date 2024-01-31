@@ -38,6 +38,7 @@ int main(){
     httplib::Server sv;
     std::string username;
     std::string password;
+    std::string name;
 
     //setting first mount for files
     sv.set_mount_point("/", "../webpage");
@@ -72,15 +73,33 @@ int main(){
             const auto &username = req.get_file_value("user");
             const auto &password = req.get_file_value("user_pass");
             std::cout << "USERNAME: " << username.content << std::endl;
-            std::cout << "PASSWORD: " << password.content << std::endl;
+            std::cout << "PASSWORD: " << password.content << std::endl; //comment out later
             resp.status=200;
-            resp.set_content("USERNAME FOUND", "text/plain");
+            resp.set_content("ACCOUNT FOUND", "text/plain");
             return;
         }
         else{
         resp.status = 400;
         resp.set_content("USERNAME or PASSWORD NOT FOUND","text/plain");
         return;}
+    });
+
+    sv.Post("/register", [] (const httplib::Request &req, httplib::Response &resp){
+        if(req.has_file("name") && req.has_file("user") && req.has_file("user_pass")){
+            const auto &username = req.get_file_value("user");
+            const auto &password = req.get_file_value("user_pass");
+            const auto &name = req.get_file_value("name");
+            std::cout << "NAME: " << name.content << std::endl; //comment out later
+            std::cout << "USERNAME: " << username.content << std::endl;
+            std::cout << "PASSWORD: " << password.content << std::endl; //comment out later
+            resp.status=200;
+            resp.set_content("USER REGISTERED", "text/plain");
+            return;
+        }
+        else{
+            resp.status = 400;
+            resp.set_content("USER NOT REGISTERED", "text/plain");
+            return;}
     });
 
     //setting starting server comment 
