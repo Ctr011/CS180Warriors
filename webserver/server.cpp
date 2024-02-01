@@ -6,7 +6,6 @@
 #include <Windows.h> //allows us to use windows api to interact with the server
 #include <string>
 #include <filesystem> //allows us to check and see where the server is located
-
 //Created Libraries
 #include "cpp-httplib/httplib.h"
 /*
@@ -38,6 +37,7 @@ int main(){
     httplib::Server sv;
     std::string username;
     std::string password;
+    std::string pass;
     std::string name;
 
     //setting first mount for files
@@ -85,14 +85,19 @@ int main(){
     });
 
     sv.Post("/register", [] (const httplib::Request &req, httplib::Response &resp){
-        if(req.has_file("name") && req.has_file("user") && req.has_file("user_pass")){
+        if(req.has_file("name") && req.has_file("user") && req.has_file("user_pass") && req.has_file("pass")){
             const auto &username = req.get_file_value("user");
             const auto &password = req.get_file_value("user_pass");
             const auto &name = req.get_file_value("name");
+            const auto &pass = req.get_file_value("pass");
             std::cout << "NAME: " << name.content << std::endl; //comment out later
             std::cout << "USERNAME: " << username.content << std::endl;
             std::cout << "PASSWORD: " << password.content << std::endl; //comment out later
-            resp.status=200;
+            std::cout << "PASS: " << pass.content << std::endl;
+            if(password.content == pass.content){
+                resp.status=200;
+            }
+            else {resp.status = 1;}
             resp.set_content("USER REGISTERED", "text/plain");
             return;
         }

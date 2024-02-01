@@ -25,6 +25,7 @@ async function user_register(event){
     formData.append('user', user_log);
     formData.append('user_pass', user_pass);
     formData.append('name', user_name);
+    formData.append('pass', user_pass2);
     try{
         const response = await fetch('/register', {
             method: 'POST',
@@ -34,8 +35,9 @@ async function user_register(event){
         console.log('SUCCESS', data);
         console.log('USERNAME: ', user_log);
         console.log("PASSWORD: ", user_pass);
-        if(response.status == 200){
-            window.confirm("CURRENTLY FOR TESTING PURPOSES!");
+        console.log("CONFIRM: ", user_pass2);
+        if(response.status != 200){
+            window.confirm("PASSWORDS DO NOT MATCH!!");
         }
     } catch(error){
         console.error('ERROR: ', error);
