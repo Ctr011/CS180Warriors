@@ -8,6 +8,7 @@
 #include <filesystem> //allows us to check and see where the server is located
 //Created Libraries
 #include "cpp-httplib/httplib.h"
+#include "../libraries/err.h"
 /*
     For this project, we will be using an open source library for communication between our c++ server and the ports.
     The library is called CPP-HTTPLIB by yhirose.
@@ -29,6 +30,15 @@
         -> add the following line to the args section:
             + "/std:c++17" or "/std:c++20" (in future, we can use "/std:c++23")
         
+    Another library we ended up using is localtunnel. This allows us to make the server visible to the local network without much tinkering with our 
+    own firewall settings. The code runs on Node.js to work and creates an instance of the local host on a temp page. This page then sends back responses
+    to the computer so it can do something with in. In our current state, it just checks inputs.
+
+    LocalTunnel Github: https://github.com/localtunnel/localtunnel?tab=readme-ov-file
+    Official Page: https://theboroer.github.io/localtunnel-www/
+    Password for port: https://loca.lt/mytunnelpassword
+
+    You only use this link on the host computer. Otherwise, just send the password onto the system
 
 */
 
@@ -74,7 +84,7 @@ int main(){
             const auto &password = req.get_file_value("user_pass");
             std::cout << "USERNAME: " << username.content << std::endl;
             std::cout << "PASSWORD: " << password.content << std::endl; //comment out later
-            resp.status=200;
+            resp.status=SUCCESS;
             resp.set_content("ACCOUNT FOUND", "text/plain");
             return;
         }
@@ -95,9 +105,11 @@ int main(){
             std::cout << "PASSWORD: " << password.content << std::endl; //comment out later
             std::cout << "PASS: " << pass.content << std::endl;
             if(password.content == pass.content){
-                resp.status=200;
+                resp.status=SUCCESS;
             }
-            else {resp.status = 1;}
+            else {
+                resp.status = PMATCHES;
+            }
             resp.set_content("USER REGISTERED", "text/plain");
             return;
         }
