@@ -36,8 +36,8 @@ body {
     align-items: center;
     min-height: 100vh;
     background: steelblue;
-    background-image: url(https://png.pngtree.com/thumb_back/fh260/background/20201206/pngtree-abstract-dark-blue-gaming-background-design-image_505148.jpg);
-    background-repeat: initial;
+    background-image: url(https://cdn.discordapp.com/attachments/1204971502940983306/1204971558133833808/blue_mixed_paint_aesthetic_background_4k_hd_blue_aesthetic-3840x2160.jpg?ex=65d6ac36&is=65c43736&hm=b62d52fe23029e79b43ff9017197a1c205feba18e3e63eec1fd08cc36253bf0c&);
+    background-repeat: no-repeat;
 }
 
 
@@ -45,4 +45,6 @@ body {
     position: relative;
     font-size: 5em;
     color: #fff;
+    border: black;
+    -webkit-text-stroke: 3px black; 
 }
