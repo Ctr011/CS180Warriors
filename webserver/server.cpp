@@ -145,6 +145,37 @@ int main(){
     //setting starting server comment 
     std::cout << "Server is listening to Port 8080..." << std::endl;
 
+    /* Open database */
+    rc = sqlite3_open("test.db", &db);
+    std::cout << "Code has created database" << std::endl;
+
+    if( rc ) {
+       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+       std::cout << "Database open failed" << std::endl;
+       return(0);
+    } else {
+       std::cout << "Opened database" << std::endl;
+    }
+
+    /* Create SQL statement */
+    char sql[] = "CREATE TABLE USER("  \
+      "ID INT PRIMARY KEY          NOT NULL," \
+      "USERNAME            TEXT    NOT NULL," \
+      "PASSWORD            TEXT    NOT NULL);";
+
+    //SEE: https://github.com/sqlitebrowser/sqlitebrowser/wiki/Win64-setup-%E2%80%94-Step-8-%E2%80%94-Install-SQLite
+
+    /* Execute SQL statement */
+    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    
+    if( rc != SQLITE_OK ){
+       fprintf(stderr, "SQL error: %s\n", zErrMsg);
+       std::cout << "Table create failed" << std::endl;
+       sqlite3_free(zErrMsg);
+    } else {
+       std::cout << "Table created successfully" << std::endl;
+    }
+
     //opening the port for the server
     sv.listen("localhost" , 8080);
 }
