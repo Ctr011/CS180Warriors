@@ -68,6 +68,11 @@ int main(){
     std::string pass;
     std::string name;
 
+    //Create variables for database
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+    
     //setting first mount for files
     sv.set_mount_point("/", "../webpage");
 
