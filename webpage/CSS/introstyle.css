@@ -36,7 +36,10 @@ body {
     align-items: center;
     min-height: 100vh;
     background: steelblue;
+    background-image: url(https://png.pngtree.com/thumb_back/fh260/background/20201206/pngtree-abstract-dark-blue-gaming-background-design-image_505148.jpg);
+    background-repeat: initial;
 }
+
 
 .logo2 {
     position: relative;
