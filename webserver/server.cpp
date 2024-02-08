@@ -50,6 +50,16 @@
 
 */
 
+// This callback function is so the SQL errors show in vscode when something goes wrong
+static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
+   int i;
+   for(i = 0; i<argc; i++) {
+      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+   }
+   printf("\n");
+   return 0;
+}
+
 int main(){
     //initializing the server to sv
     httplib::Server sv;
