@@ -9,6 +9,7 @@
                 "/Zi",
                 "/EHsc",
                 "/nologo",
+                "${fileDirname}\\sqlite3.c",
                 "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "${file}"
             ],

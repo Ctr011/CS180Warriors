@@ -31,6 +31,12 @@ async function userlog(event){
         console.log('SUCCESS', data);
         console.log('USERNAME: ', user_log);
         console.log("PASSWORD: ", user_pass);
+        if(response.status != 200){
+            window.alert("Incorrect Login. Please Try Again...");
+        }
+        else{
+            window.location.replace("/mainsearch.html");  //change the page where we are loading here
+        }
     } catch(error){
         console.error('ERROR: ', error);
         alert(error + "\n Please Contact Technical Support!");

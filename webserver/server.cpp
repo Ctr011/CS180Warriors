@@ -6,6 +6,14 @@
 #include <Windows.h> //allows us to use windows api to interact with the server
 #include <string>
 #include <filesystem> //allows us to check and see where the server is located
+
+//Includes for SQLlite database. Make sure to follow installation instructions: https://www.tutorialspoint.com/sqlite/sqlite_quick_guide.htm
+//Also be sure to include the sqlite3.c file in the same directory as the server.cpp file and add it to the build process in tasks.json as ["${fileDirname}\\sqlite3.c",]
+//Lastly, be sure the callback function is added above main as described in the above tutorial and getting a SQlite viewer extension can make it easy to view the db.
+#include "sqlite3.h"
+#include <stdio.h>
+#include <stdlib.h>
+
 //Created Libraries
 #include "cpp-httplib/httplib.h"
 #include "../libraries/err.h"
@@ -42,6 +50,16 @@
 
 */
 
+// This callback function is so the SQL errors show in vscode when something goes wrong
+static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
+   int i;
+   for(i = 0; i<argc; i++) {
+      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+   }
+   printf("\n");
+   return 0;
+}
+
 int main(){
     //initializing the server to sv
     httplib::Server sv;
@@ -50,6 +68,11 @@ int main(){
     std::string pass;
     std::string name;
 
+    //Create variables for database
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+    
     //setting first mount for files
     sv.set_mount_point("/", "../webpage");
 
@@ -121,6 +144,37 @@ int main(){
 
     //setting starting server comment 
     std::cout << "Server is listening to Port 8080..." << std::endl;
+
+    /* Open database */
+    rc = sqlite3_open("test.db", &db);
+    std::cout << "Code has created database" << std::endl;
+
+    if( rc ) {
+       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+       std::cout << "Database open failed" << std::endl;
+       return(0);
+    } else {
+       std::cout << "Opened database" << std::endl;
+    }
+
+    /* Create SQL statement */
+    char sql[] = "CREATE TABLE USER("  \
+      "ID INT PRIMARY KEY          NOT NULL," \
+      "USERNAME            TEXT    NOT NULL," \
+      "PASSWORD            TEXT    NOT NULL);";
+
+    //SEE: https://github.com/sqlitebrowser/sqlitebrowser/wiki/Win64-setup-%E2%80%94-Step-8-%E2%80%94-Install-SQLite
+
+    /* Execute SQL statement */
+    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    
+    if( rc != SQLITE_OK ){
+       fprintf(stderr, "SQL error: %s\n", zErrMsg);
+       std::cout << "Table create failed" << std::endl;
+       sqlite3_free(zErrMsg);
+    } else {
+       std::cout << "Table created successfully" << std::endl;
+    }
 
     //opening the port for the server
     sv.listen("localhost" , 8080);
