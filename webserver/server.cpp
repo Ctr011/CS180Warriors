@@ -72,7 +72,7 @@ int main(){
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
-    
+
     //setting first mount for files
     sv.set_mount_point("/", "../webpage");
 
@@ -123,6 +123,29 @@ int main(){
             const auto &password = req.get_file_value("user_pass");
             const auto &name = req.get_file_value("name");
             const auto &pass = req.get_file_value("pass");
+
+            sqlite3 *db;
+            char *zErrMsg = 0;
+            int rc;
+
+            rc = sqlite3_open("Database.db", &db);
+            std::string sql = "INSERT INTO User (NAME, USERNAME, PASSWORD) VALUES (?1, ?2, ?3);";
+
+            sqlite3_stmt* stmt; // will point to prepared stamement object
+
+            sqlite3_prepare_v2(db, sql.c_str(), sql.length(), &stmt, nullptr);       
+            
+            std::string newName = name.content;
+            std::string newUsername = username.content;
+            std::string newPassword = password.content;
+
+            sqlite3_bind_text(stmt, 1, newName.c_str(), newName.length(), SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 2, newUsername.c_str(), newUsername.length(), SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 3, newPassword.c_str(), newPassword.length(), SQLITE_STATIC);
+
+            sqlite3_step(stmt); // Check the return value below this call to see if it was successful
+            sqlite3_finalize(stmt); // Always finalize a statement when you're done with it
+
             std::cout << "NAME: " << name.content << std::endl; //comment out later
             std::cout << "USERNAME: " << username.content << std::endl;
             std::cout << "PASSWORD: " << password.content << std::endl; //comment out later
@@ -146,8 +169,8 @@ int main(){
     std::cout << "Server is listening to Port 8080..." << std::endl;
 
     /* Open database */
-    rc = sqlite3_open("test.db", &db);
-    std::cout << "Code has created database" << std::endl;
+    rc = sqlite3_open("Database.db", &db);
+    std::cout << "Code has opened database" << std::endl;
 
     if( rc ) {
        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -158,10 +181,10 @@ int main(){
     }
 
     /* Create SQL statement */
-    char sql[] = "CREATE TABLE USER("  \
-      "ID INT PRIMARY KEY          NOT NULL," \
-      "USERNAME            TEXT    NOT NULL," \
-      "PASSWORD            TEXT    NOT NULL);";
+    char sql[] = "CREATE TABLE User ("                           \
+      "NAME                TEXT      PRIMARY KEY      NOT NULL," \
+      "USERNAME            TEXT                       NOT NULL," \
+      "PASSWORD            TEXT                       NOT NULL);";
 
     //SEE: https://github.com/sqlitebrowser/sqlitebrowser/wiki/Win64-setup-%E2%80%94-Step-8-%E2%80%94-Install-SQLite
 
