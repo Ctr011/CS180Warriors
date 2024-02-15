@@ -7,7 +7,7 @@
 #include <string>
 #include <filesystem> //allows us to check and see where the server is located
 
-//Includes for SQLlite database. Make sure to follow installation instructions: https://www.tutorialspoint.com/sqlite/sqlite_quick_guide.htm
+//Includes for SQLlite database. If there are build problems follow the instructions: https://www.tutorialspoint.com/sqlite/sqlite_quick_guide.htm
 //Also be sure to include the sqlite3.c file in the same directory as the server.cpp file and add it to the build process in tasks.json as ["${fileDirname}\\sqlite3.c",]
 //Lastly, be sure the callback function is added above main as described in the above tutorial and getting a SQlite viewer extension can make it easy to view the db.
 #include "sqlite3.h"
