@@ -119,15 +119,16 @@ int main(){
             std::string sql1 = "SELECT USERNAME, PASSWORD from User";
             std::cout << sql << std::endl;
             //rc = sqlite3_exec(db, sql1.c_str(),callback,(void*)data, &zErrMsg);
-            rc = sqlite3_exec(db, sql.c_str(),callback,(void*)data, &zErrMsg);
-            rc = sqlite3_prepare_v2(db, sql.c_str(), sql.length(), &st, nullptr); //outputs the table
+            rx = sqlite3_exec(db, sql.c_str(),callback,(void*)data, &zErrMsg);
+            std::cout << rc << std::endl;
+            rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &st, nullptr); //outputs the table
             // if(sqlite3_step(st) != NULL){
             //     resp.status = SUCCESS;
             //     return;
             // }
             std::cout << rc << std::endl;
-            if(rc == SQLITE_OK){            
-                rc = sqlite3_step(st); // initial step to check
+            if(rx == SQLITE_OK && (rc = sqlite3_step(st)) == SQLITE_ROW){            
+                // rc = sqlite3_step(st); // initial step to check
                 std::cout << rc << std::endl;
                 std::cout << sqlite3_column_text(st,0) << std::endl; // checking to see if there is a username
                 std::cout << sqlite3_column_text(st,1) << std::endl; // checking to see if there is a password 
