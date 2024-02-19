@@ -133,6 +133,7 @@ int main(){
                 std::cout << sqlite3_column_text(st,0) << std::endl; // checking to see if there is a username
                 std::cout << sqlite3_column_text(st,1) << std::endl; // checking to see if there is a password 
                 resp.status = SUCCESS;
+                sqlite3_finalize(st); // Always finalize a statement when you're done with it
                 resp.set_content("ACCOUNT FOUND", "text/plain");
                 return;
             }
