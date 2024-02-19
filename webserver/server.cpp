@@ -107,8 +107,45 @@ int main(){
             const auto &password = req.get_file_value("user_pass");
             std::cout << "USERNAME: " << username.content << std::endl;
             std::cout << "PASSWORD: " << password.content << std::endl; //comment out later
-            resp.status=SUCCESS;
-            resp.set_content("ACCOUNT FOUND", "text/plain");
+
+            sqlite3 *db;
+            char *zErrMsg = 0;
+            int rc;
+            int rx;
+            const char* data = "Callback function called";
+            sqlite3_stmt *st;
+            rc = sqlite3_open("Database.db", &db);
+            std::string sql = "SELECT USERNAME, PASSWORD from User where USERNAME = '"  + username.content + "'  AND PASSWORD = '" + password.content +"'";
+            std::string sql1 = "SELECT USERNAME, PASSWORD from User";
+            std::cout << sql << std::endl;
+            //rc = sqlite3_exec(db, sql1.c_str(),callback,(void*)data, &zErrMsg);
+            rc = sqlite3_exec(db, sql.c_str(),callback,(void*)data, &zErrMsg);
+            rc = sqlite3_prepare_v2(db, sql.c_str(), sql.length(), &st, nullptr); //outputs the table
+            // if(sqlite3_step(st) != NULL){
+            //     resp.status = SUCCESS;
+            //     return;
+            // }
+            std::cout << rc << std::endl;
+            if(rc == SQLITE_OK){            
+                rc = sqlite3_step(st); // initial step to check
+                std::cout << rc << std::endl;
+                std::cout << sqlite3_column_text(st,0) << std::endl; // checking to see if there is a username
+                std::cout << sqlite3_column_text(st,1) << std::endl; // checking to see if there is a password 
+                resp.status = SUCCESS;
+                resp.set_content("ACCOUNT FOUND", "text/plain");
+                return;
+            }
+            // while(st){
+            //     char user[100] = sqlite3_column_text(st,0);
+
+            //     if(userr == user){
+            //         resp.status = SUCCESS;
+            //         resp.set_content("ACCOUNT FOUND", "text/plain");
+            //         return;
+            //     }
+            // }
+            resp.status = DMATCHES;
+            resp.set_content("ACCOUNT NOT FOUND", "text/plain");
             return;
         }
         else{
@@ -143,14 +180,16 @@ int main(){
             sqlite3_bind_text(stmt, 2, newUsername.c_str(), newUsername.length(), SQLITE_STATIC);
             sqlite3_bind_text(stmt, 3, newPassword.c_str(), newPassword.length(), SQLITE_STATIC);
 
-            sqlite3_step(stmt); // Check the return value below this call to see if it was successful
-            sqlite3_finalize(stmt); // Always finalize a statement when you're done with it
+            // sqlite3_step(stmt); // Check the return value below this call to see if it was successful
+            // sqlite3_finalize(stmt); // Always finalize a statement when you're done with it
 
             std::cout << "NAME: " << name.content << std::endl; //comment out later
             std::cout << "USERNAME: " << username.content << std::endl;
             std::cout << "PASSWORD: " << password.content << std::endl; //comment out later
             std::cout << "PASS: " << pass.content << std::endl;
             if(password.content == pass.content){
+                sqlite3_step(stmt); // Check the return value below this call to see if it was successful
+                sqlite3_finalize(stmt); // Always finalize a statement when you're done with it
                 resp.status=SUCCESS;
             }
             else {
