@@ -166,14 +166,15 @@ int main(){
             sqlite3 *db;
             char *zErrMsg = 0;
             int rc;
-
+            int rc_check;
+            int rx;
             rc = sqlite3_open("Database.db", &db);
             std::string sql = "INSERT INTO User (NAME, USERNAME, PASSWORD) VALUES (?1, ?2, ?3);";
-
+            std::string sql_check = "SELECT USERNAME, PASSWORD from User where USERNAME = '"  + username.content +"'";
             sqlite3_stmt* stmt; // will point to prepared stamement object
-
+            sqlite3_stmt* st;
             sqlite3_prepare_v2(db, sql.c_str(), sql.length(), &stmt, nullptr);       
-            
+            rc = sqlite3_prepare_v2(db, sql_check.c_str(), -1, &st, nullptr); //outputs the table
             std::string newName = name.content;
             std::string newUsername = username.content;
             std::string newPassword = password.content;
@@ -189,6 +190,7 @@ int main(){
             std::cout << "USERNAME: " << username.content << std::endl;
             std::cout << "PASSWORD: " << password.content << std::endl; //comment out later
             std::cout << "PASS: " << pass.content << std::endl;
+            if(rc == SQLITE_OK && sqlite3_step(st) != SQLITE_ROW){
             if(password.content == pass.content){
                 sqlite3_step(stmt); // Check the return value below this call to see if it was successful
                 sqlite3_finalize(stmt); // Always finalize a statement when you're done with it
@@ -196,6 +198,8 @@ int main(){
             }
             else {
                 resp.status = PMATCHES;
+            }}
+            else{resp.status = 0; // user does already exists
             }
             resp.set_content("USER REGISTERED", "text/plain");
             return;

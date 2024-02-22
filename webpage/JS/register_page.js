@@ -36,11 +36,14 @@ async function user_register(event){
         console.log('USERNAME: ', user_log);
         console.log("PASSWORD: ", user_pass);
         console.log("CONFIRM: ", user_pass2);
-        if(response.status != 200){
+        if(response.status == 0){
+            window.alert("User Already Exists...");
+        }
+        else if(response.status != 200){
             window.alert("Passwords do not match...");
         }
         else{
-            window.location.replace("/loginindex.html");  //change the page where we are loading here
+            window.location.replace("/mainsearch.html");  //change the page where we are loading here
         }
     } catch(error){
         console.error('ERROR: ', error);
