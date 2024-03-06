@@ -44,3 +44,4 @@ async function userlog(event){
     
     event.preventDefault();
 }
+module.exports = userlog;

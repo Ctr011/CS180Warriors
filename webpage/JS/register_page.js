@@ -52,3 +52,4 @@ async function user_register(event){
     
     event.preventDefault();
 }
+module.exports = user_register;
