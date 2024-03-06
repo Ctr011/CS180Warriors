@@ -58,13 +58,25 @@ body {
     border-radius: 15px;
     text-align: center;
     color: #333;
-    margin-right: 1950px;
-    margin-bottom: 700px;
+    /*margin-right: 1950px;
+    margin-bottom: 700px;*/
 }
 
 .card h1{
     font-weight: 500;
     color: #000;
+}
+
+.preferences{
+    width: 400px;
+    background: #fff;
+    display: center;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    color: #333;
 }
 
 .card img{
