@@ -244,6 +244,19 @@ int main(){
        std::cout << "Table created successfully" << std::endl;
     }
 
+    char sql1[] = "CREATE TABLE Games ("                           \
+      "NAME                TEXT      PRIMARY KEY      NOT NULL," \
+      "Description         TEXT                       NOT NULL," \
+      "Tags                TEXT                       NOT NULL);";
+
+    rc = sqlite3_exec(db, sql1, callback, 0, &zErrMsg);
+    if( rc != SQLITE_OK ){
+       fprintf(stderr, "SQL error: %s\n", zErrMsg);
+       std::cout << "Table create failed" << std::endl;
+       sqlite3_free(zErrMsg);
+    } else {
+       std::cout << "Table created successfully" << std::endl;
+    }
     //opening the port for the server
     sv.listen("localhost" , 8080);
 }
