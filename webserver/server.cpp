@@ -257,6 +257,28 @@ int main(){
     } else {
        std::cout << "Table created successfully" << std::endl;
     }
+
+
+    sqlite3 *plite;
+    sqlite3 *pFile; // connection to database
+    sqlite3_backup *back; // object to backup data
+    sqlite3 *pto; // copyy to
+    sqlite3 *pfrom; // copy from
+    rc = sqlite3_open("backup_data.db", &plite);
+    rc = sqlite3_open("Database.db", &pFile);
+
+    if(rc == SQLITE_OK){
+      pfrom = (pFile);
+      pto = plite;
+
+      back = sqlite3_backup_init(pto, "main", pfrom, "main");
+      // std::cout << back << std::endl;
+      if(back){
+         sqlite3_backup_step(back,-1);
+         sqlite3_backup_finish(back);
+      }
+         rc = sqlite3_errcode(pto);}
+
     //opening the port for the server
     sv.listen("localhost" , 8080);
 }
