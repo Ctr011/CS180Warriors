@@ -108,6 +108,13 @@ int main(){
         // res.set_content("Hello World!", "text/plain");
     });
 
+    sv.Get("/test_req", [](const httplib::Request &, httplib::Response &resp) { 
+        std::ifstream file("../webpage/HTML/request.html"); //change later on with actual intro page
+        std::stringstream buffer; //setting buffer for the html files
+        buffer << file.rdbuf(); //buffer will now load the html file (webpage)
+        resp.set_content(buffer.str(), "text/html"); //finally loading the file page onto the server 
+        // res.set_content("Hello World!", "text/plain");
+    });
     sv.Post("/login", [](const httplib::Request &req, httplib::Response &resp){
         if(req.has_file("user") && req.has_file("user_pass")){
             const auto &username = req.get_file_value("user");

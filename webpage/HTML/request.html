@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">    
+    <head>
+        <title>
+            Game Request
+        </title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link rel="stylesheet" href="/CSS/inputgame.css"> -->
+        <script type="text/javascript" src="/JS/game_request.js"></script>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+
+    <!-- gameName -->
+    <!-- gameDes -->
+    <!-- game_request(event) -->
+    <!-- /add_game -->
+    <body>
+        <header>
+            <h2><a href="mainsearch.html" class="logo">GameRec+</a></h2>
+        </header>
+        <div class = "container">
+            <form >
+                <div> <input id="gameName" type="text" action="/add_game" placeholder = "Enter Game Name"></div>
+    
+                <div><input id="gameDes" type="text" action="/add_game" placeholder="Enter Game Description"></div>
+                <button id="gm" onclick="game_request(event)" type="button" class="btn">Enter</button>
+            </form>
+
+    </body>

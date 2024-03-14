@@ -60,7 +60,7 @@ void init_logs(){
         std::ofstream soutfile(p1);
         //outfile << "File Creation Success!!" << endl;
         std::cout << "Original Request File Has Been Created..." << std::endl;
-        soutfile << "Game Name and Small Description" << std::endl;
+        soutfile << "Game Name : Small Description" << std::endl;
         soutfile.close();}
 
     
@@ -75,7 +75,7 @@ void request_game(std::string game, std::string info){
     file.open(path, std::ios_base::app);
     if(file){ //we are checking to see if the file is created
        std::cout << "File Exists...Adding Request" << std::endl; //just showing that file exists
-       file << game << " " << info << std::endl;
+       file << game << " : " << info << std::endl;
 
        file.close();
         
