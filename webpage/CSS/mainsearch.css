@@ -80,9 +80,11 @@ header {
 }
 
 .logo {
-    font-size: 1.7em;
+    font-size: 1.3em;
     color: #fff;
     user-select: none;
+    cursor: pointer;
+    text-decoration: none; 
 }
 
 .navigation i{
