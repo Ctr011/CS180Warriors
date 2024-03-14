@@ -17,6 +17,7 @@
 //Created Libraries
 #include "cpp-httplib/httplib.h"
 #include "../libraries/err.h"
+#include "../libraries/log.h"
 /*
     For this project, we will be using an open source library for communication between our c++ server and the ports.
     The library is called CPP-HTTPLIB by yhirose.
@@ -67,6 +68,12 @@ int main(){
     std::string password;
     std::string pass;
     std::string name;
+
+    std::string game_add;
+    std::string game_desc;
+
+
+    init_logs(); //init log files
 
     //Create variables for database
     sqlite3 *db;
@@ -134,6 +141,8 @@ int main(){
                 std::cout << sqlite3_column_text(st,1) << std::endl; // checking to see if there is a password 
                 resp.status = SUCCESS;
                 sqlite3_finalize(st); // Always finalize a statement when you're done with it
+                std::string up = "User Logged Into Website....";
+                update_logs(up);
                 resp.set_content("ACCOUNT FOUND", "text/plain");
                 return;
             }
@@ -146,6 +155,8 @@ int main(){
             //         return;
             //     }
             // }
+            std::string up = "User Attempted Login....";
+            update_logs(up);
             resp.status = DMATCHES;
             resp.set_content("ACCOUNT NOT FOUND", "text/plain");
             return;
@@ -153,6 +164,23 @@ int main(){
         else{
         resp.status = 400;
         resp.set_content("USERNAME or PASSWORD NOT FOUND","text/plain");
+        return;}
+    });
+
+    sv.Post("/add_game", [](const httplib::Request &req, httplib::Response &resp){
+        if(req.has_file("gameName") && req.has_file("gameDes")){
+            const auto &game_add = req.get_file_value("gameName");
+            const auto &game_desc = req.get_file_value("gameDes");
+            request_game(game_add.content, game_desc.content);
+            std::string up = "User Requested Game....";
+            update_logs(up);
+            resp.status = SUCCESS;
+            resp.set_content("Game Request Sent", "text/plain");
+            return;
+        }
+        else{
+        resp.status = 400;
+        resp.set_content("Cannot Send Request","text/plain");
         return;}
     });
 
@@ -194,9 +222,13 @@ int main(){
             if(password.content == pass.content){
                 sqlite3_step(stmt); // Check the return value below this call to see if it was successful
                 sqlite3_finalize(stmt); // Always finalize a statement when you're done with it
+                std::string up = "New User Registered....";
+                update_logs(up);
                 resp.status=SUCCESS;
             }
             else {
+                std::string up = "User Register Failed....";
+                update_logs(up);
                 resp.status = PMATCHES;
             }}
             else{resp.status = 0; // user does already exists
