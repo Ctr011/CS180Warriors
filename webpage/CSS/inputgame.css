@@ -86,3 +86,23 @@ header {
     color: white;
     font-size: 25px;
 }
+
+.button-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px; /* Adjust size as needed */
+    height: 60px; /* Adjust size as needed */
+    background-color: rgb(19, 106, 150);
+    color: #ffffff;
+    border-radius: 50%;
+    text-decoration: none;
+  }
+  .button-link:hover {
+    background-color: rgb(24, 81, 110);
+  }
+  .button-link i {
+    font-size: 30px; /* Adjust icon size as needed */
+  }
+  
+  
