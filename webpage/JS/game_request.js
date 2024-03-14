@@ -48,4 +48,4 @@ async function game_request(event){
     
     event.preventDefault();
 }
-module.exports = userlog;
+module.exports = game_request;

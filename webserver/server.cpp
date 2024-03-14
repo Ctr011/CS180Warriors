@@ -72,6 +72,7 @@ int main(){
     std::string game_add;
     std::string game_desc;
 
+    std::string taggs;
 
     init_logs(); //init log files
 
@@ -238,6 +239,49 @@ int main(){
                 update_logs(up);
                 resp.status = PMATCHES;
             }}
+            else{resp.status = 0; // user does already exists
+            }
+            resp.set_content("USER REGISTERED", "text/plain");
+            return;
+        }
+        else{
+            resp.status = 400;
+            resp.set_content("USER NOT REGISTERED", "text/plain");
+            return;}
+    });
+
+
+    sv.Post("/main_tags", [] (const httplib::Request &req, httplib::Response &resp){
+        if(req.has_file("tags")){
+            const auto &taggs = req.get_file_value("tags");
+
+            // std::string taggs;
+
+            sqlite3 *db;
+            char *zErrMsg = 0;
+            int rc;
+            int rc_check;
+            int rx;
+            rc = sqlite3_open("Database.db", &db);
+            std::string sql_check = "SELECT NAME, Description from Games where Tags like '%"  + taggs.content +"%'";
+            // sqlite3_stmt* stmt; // will point to prepared stamement object
+            sqlite3_stmt* st;
+            sqlite3_exec(db, sql_check.c_str(), callback, 0, &zErrMsg);
+            rc = sqlite3_prepare_v2(db, sql_check.c_str(), -1, &st, nullptr); //outputs the table
+
+            // sqlite3_step(stmt); // Check the return value below this call to see if it was successful
+            // sqlite3_finalize(stmt); // Always finalize a statement when you're done with it
+
+            std::cout << "Tags: " << taggs.content << std::endl;
+            if(rc == SQLITE_OK && (rx = sqlite3_step(st) )== SQLITE_ROW){
+                std::cout << sqlite3_column_text(st,0) << std::endl; // checking to see if there is a username
+                std::cout << sqlite3_column_text(st,1) << std::endl; // checking to see if there is a password 
+                sqlite3_step(st); // Check the return value below this call to see if it was successful
+                sqlite3_finalize(st); // Always finalize a statement when you're done with it
+                // std::string up = "New User Registered....";
+                // update_logs(up);
+                resp.status=SUCCESS;
+                }
             else{resp.status = 0; // user does already exists
             }
             resp.set_content("USER REGISTERED", "text/plain");
