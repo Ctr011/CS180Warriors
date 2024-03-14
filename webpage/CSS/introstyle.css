@@ -43,8 +43,12 @@ body {
 
 .logo2 {
     position: relative;
-    font-size: 7em;
-    color: #fff;
-    border: black;
-    -webkit-text-stroke: 3px black; 
-}
+    font-size: 9em;
+    font-family: 'Lobster', cursive; /* Specify Lobster font */
+    color: white;
+    text-shadow: 
+      -4px -4px  #000,  
+       2px -2px 0 #000,
+      -2px  2px 0 #000,
+       2px  2px 0 #000;
+  }

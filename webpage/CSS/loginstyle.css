@@ -92,3 +92,17 @@ body {
     text-align: center;
     margin: 20px 0 15px;
 }
+
+.logo2 {
+    font-size: 1.3em;
+    color: #fff;
+    user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Lobster', cursive; /* Specify Lobster font */
+    text-shadow: 
+      -4px -4px  #000,  
+       2px -2px 0 #000,
+      -2px  2px 0 #000,
+       2px  2px 0 #000;
+}
