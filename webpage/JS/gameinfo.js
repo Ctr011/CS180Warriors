@@ -22,21 +22,37 @@ window.onload = async function game(){
 
     // games.innerHTML = "We Cooking..."
 
-    let out = " ";
-    // i = 0;
-    for(let gamess of game_info){
-        out+= `
-                <ul> 
-                    <h> Game Name: </h>
-                    <p>${gamess.name} </p>
-                    <h> Game Description: </h>
-                    <p>${gamess.description}</p>
-                </ul> 
+    let out = "";
+    let maxResults = 4; // Maximum number of results
+    
+    // Shuffle function to shuffle the array
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+    
+    // Shuffle the game_info array
+    const shuffledGames = shuffle(game_info);
+    
+    // Iterate through the shuffled array and append the first 4 results
+    for (let i = 0; i < Math.min(shuffledGames.length, maxResults); i++) {
+        const gamess = shuffledGames[i];
+        out += `
+            <ul> 
+                <h> Game Name: </h>
+                <p>${gamess.name}</p>
+                <h> Game Description: </h>
+                <p>${gamess.description}</p>
+            </ul> 
         `;
     }
-    // console.log(i);
+    
     console.log(out);
     games.innerHTML = out;
+    
 
 }
 module.exports = game_request;
