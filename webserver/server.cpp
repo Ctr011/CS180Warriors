@@ -124,6 +124,15 @@ int main(){
         resp.set_content(buffer.str(), "text/html"); //finally loading the file page onto the server 
         // res.set_content("Hello World!", "text/plain");
     });
+
+    sv.Get("/test_out", [](const httplib::Request &, httplib::Response &resp) { 
+        std::ifstream file("../webpage/HTML/gameinfo.html"); //change later on with actual intro page
+        std::stringstream buffer; //setting buffer for the html files
+        buffer << file.rdbuf(); //buffer will now load the html file (webpage)
+        resp.set_content(buffer.str(), "text/html"); //finally loading the file page onto the server 
+        // res.set_content("Hello World!", "text/plain");
+    });
+
     sv.Post("/login", [](const httplib::Request &req, httplib::Response &resp){
         if(req.has_file("user") && req.has_file("user_pass")){
             const auto &username = req.get_file_value("user");
@@ -309,7 +318,7 @@ int main(){
                 // std::cout << gam_des.size() << std::endl;
                 // json g_list;
                 g_list = create_json(gam_des);
-                std::cout << g_list.dump() << std::endl;
+                std::cout << g_list.dump(2) << std::endl;
                 // std::cout << gam_des.size().size() << std::endl;
                 sqlite3_finalize(st); // Always finalize a statement when you're done with it
                 resp.set_content(g_list.dump(), "application/json");
