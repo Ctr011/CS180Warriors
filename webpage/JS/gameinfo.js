@@ -45,7 +45,7 @@ window.onload = async function game(){
         <div style="border: 2px solid black; padding: 20px; margin: 20px; margin-bottom: 0px; background-color: #fbfbf6; border-radius: 10px;">
             <ul style="margin-bottom: -10px;"> 
                 <h style="color: black; margin-bottom: 10px; font-size: 22px;"> <strong>Game Name:</strong> </h>
-                <p style="color: black; margin-bottom: 20px; font-size: 19px;">${gamess.name}</p>
+                <p style="color: black; margin-bottom: 20px; font-size: 20px;">${gamess.name}</p>
                 <h style="color: black; margin-bottom: 10px; font-size: 22px;"> <strong>Game Description:</strong> </h>
                 <p style="color: black; margin-bottom: 20px; font-size: 19px;">${gamess.description}</p>
             </ul> 
