@@ -13,6 +13,7 @@
 * This function's main goal is to see if the user has a username and password, or if they are the same. 
 */
 
+
 window.onload = async function game(){
     // var game_info = JSON.stringify(localStorage.getItem("game_list"));
     var game_info = JSON.parse(localStorage.getItem("game_list"));
@@ -41,18 +42,22 @@ window.onload = async function game(){
     for (let i = 0; i < Math.min(shuffledGames.length, maxResults); i++) {
         const gamess = shuffledGames[i];
         out += `
-            <ul> 
-                <h> <strong>Game Name:</strong> </h>
-                <p>${gamess.name}</p>
-                <h> Game Description: </h>
-                <p>${gamess.description}</p>
-            </ul> 
+        <ul> 
+            <h style="color: black; margin-bottom: 10px;"> <strong>Game Name:</strong> </h>
+            <p style="color: black; margin-bottom: 20px;">${gamess.name}</p>
+            <h style="color: black; margin-bottom: 10px;"> <strong>Game Description:</strong> </h>
+            <p style="color: black; margin-bottom: 20px;">${gamess.description}</p>
+        </ul> 
+
         `;
     }
     
     console.log(out);
     games.innerHTML = out;
     
+    games.style.display = 'flex';
+    games.style.justifyContent = 'center';
+    games.style.alignItems = 'center';
 
 }
 module.exports = game_request;

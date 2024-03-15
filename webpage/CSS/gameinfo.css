@@ -88,6 +88,14 @@ header {
       -2px  2px 0 #000,
        2px  2px 0 #000;
 }
+.did {
+    font-size: 1.1em;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+    text-decoration: none;
+    align-items: center;
+}
 
 .navigation i{
     color: white;
@@ -97,8 +105,4 @@ header {
 .body{
     background-color: steelblue;
 }
-/* 
-.p1{
 
-
-} */
