@@ -45,4 +45,4 @@ async function search_tag(event){
     event.preventDefault();
 }
 
-module.export = search_tag;
+module.exports = search_tag;

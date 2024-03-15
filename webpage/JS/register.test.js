@@ -58,9 +58,6 @@ describe('user_register function', () => {
     
         // Call user_register function
         await user_register(new Event('submit'));
-    
-        // Expect an alert to be shown with the correct message
-        //expect(alertSpy).toHaveBeenCalledWith("Passwords do not match...");
     });
     
     test('should show an alert for existing user', async () => {
