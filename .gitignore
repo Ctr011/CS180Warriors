@@ -1,0 +1,25 @@
+# files which are not important to update to repo
+
+# Webserver Directory Files
+/webserver/server.exe
+/webserver/server.ilk
+/webserver/server.obj
+/webserver/server.pdb
+/webserver/vc140.pdb
+
+# Admin Testing 
+/webserver/admin.exe
+/webserver/admin.ilk
+/webserver/admin.obj
+/webserver/admin.pdb
+
+# Database files
+/webserver/sqlite3.obj
+/webserver/test.db
+
+# Client Directory Files
+/clientserver/client.exe
+/clientserver/client.ilk
+/clientserver/client.obj
+/clientserver/client.pdb
+/clientserver/vc140.pdb
