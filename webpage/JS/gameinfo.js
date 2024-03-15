@@ -24,7 +24,7 @@ window.onload = async function game(){
     // games.innerHTML = "We Cooking..."
 
     let out = "";
-    let maxResults = 4; // Maximum number of results
+    let maxResults = 20; // Maximum number of results
     
     // Shuffle function to shuffle the array
     function shuffle(array) {
@@ -43,10 +43,10 @@ window.onload = async function game(){
         const gamess = shuffledGames[i];
         out += `
         <ul> 
-            <h style="color: black; margin-bottom: 10px;"> <strong>Game Name:</strong> </h>
-            <p style="color: black; margin-bottom: 20px;">${gamess.name}</p>
-            <h style="color: black; margin-bottom: 10px;"> <strong>Game Description:</strong> </h>
-            <p style="color: black; margin-bottom: 20px;">${gamess.description}</p>
+            <h style="color: black; margin-bottom: 10px; font-size: 22px;"> <strong>Game Name:</strong> </h>
+            <p style="color: black; margin-bottom: 20px; font-size: 19px;">${gamess.name}</p>
+            <h style="color: black; margin-bottom: 10px; font-size: 22px;"> <strong>Game Description:</strong> </h>
+            <p style="color: black; margin-bottom: 20px; font-size: 19px;">${gamess.description}</p>
         </ul> 
 
         `;
