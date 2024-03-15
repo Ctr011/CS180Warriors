@@ -27,12 +27,14 @@ async function search_tag(event){
             method: 'POST',
             body: formData
         });
-        const data = await response;
+        // const m = await response;
+        const data = await response.json();
         console.log('SUCCESS', data);
         console.log('TAGS: ', s_tag);
         // console.log("PASSWORD: ", user_pass);
+        localStorage.setItem("game_list", JSON.parse(data));
         if(response.status != 200){
-            window.alert("Incorrect Login. Please Try Again...");
+            window.alert("Sorry, We Currently Do Not Have This Tag...Try Writing It In A Different Manner...");
         }
         else{
             window.location.replace("/mainsearch.html");  //change the page where we are loading here

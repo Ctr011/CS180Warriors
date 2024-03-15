@@ -21,6 +21,10 @@
 #include "cpp-httplib/httplib.h"
 #include "../libraries/err.h"
 #include "../libraries/log.h"
+#include "nlohmann/json.hpp"
+#include "../libraries/mjson.h"
+
+using json = nlohmann::json;
 /*
     For this project, we will be using an open source library for communication between our c++ server and the ports.
     The library is called CPP-HTTPLIB by yhirose.
@@ -74,6 +78,7 @@ int main(){
 
     std::string game_add;
     std::string game_desc;
+    json g_list;
 
     std::string taggs;
 
@@ -254,7 +259,7 @@ int main(){
     });
 
 
-    sv.Post("/main_tags", [] (const httplib::Request &req, httplib::Response &resp){
+    sv.Post("/main_tags", [&] (const httplib::Request &req, httplib::Response &resp){
         if(req.has_file("tags")){
             const auto &taggs = req.get_file_value("tags");
 
@@ -300,15 +305,21 @@ int main(){
                     count += 1;
                     rx = 0;
                 }
-                std::cout << count << std::endl;
-                std::cout << gam_des.size() << std::endl;
+                // std::cout << count << std::endl;
+                // std::cout << gam_des.size() << std::endl;
+                // json g_list;
+                g_list = create_json(gam_des);
+                std::cout << g_list.dump() << std::endl;
                 // std::cout << gam_des.size().size() << std::endl;
                 sqlite3_finalize(st); // Always finalize a statement when you're done with it
+                resp.set_content(g_list.dump(), "application/json");
                 if(rx == 0){
-                    gam_des.clear();
-                 resp.status=SUCCESS;}
+                    resp.status=SUCCESS;
+                    return;
+                }
                 else{
-                    resp.status = NFOUND;}
+                    resp.status = NFOUND;
+                    return;}
             }
             else{resp.status = 0; // user does already exists
             }
