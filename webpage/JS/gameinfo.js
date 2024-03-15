@@ -42,7 +42,7 @@ window.onload = async function game(){
         const gamess = shuffledGames[i];
         out += `
             <ul> 
-                <h> Game Name: </h>
+                <h> <strong>Game Name:</strong> </h>
                 <p>${gamess.name}</p>
                 <h> Game Description: </h>
                 <p>${gamess.description}</p>
